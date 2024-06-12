@@ -1,10 +1,13 @@
 import { NextUIProvider } from "@nextui-org/react";
 import { Home } from "./components/Home";
+import { TodoProvider } from "./context/TodoProvider";
 
 function App() {
   return (
     <NextUIProvider>
-      <Home />
+      <TodoProvider>
+        <Home />
+      </TodoProvider>
     </NextUIProvider>
   );
 }
