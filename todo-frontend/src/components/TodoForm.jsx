@@ -12,7 +12,7 @@ const defaultValues = {
   done: false,
 }
 
-export const TodoForm = ({ initialValues = defaultValues }) => {
+export const TodoForm = ({ initialValues = defaultValues, onSave = () => {} }) => {
 
   const { todos, setTodos } = useContext( TodoContext );
 
@@ -22,6 +22,7 @@ export const TodoForm = ({ initialValues = defaultValues }) => {
       saveTodo(values);
       setTodos([...todos, values]);
       formik.resetForm();
+      onSave();
     },
   });
 
