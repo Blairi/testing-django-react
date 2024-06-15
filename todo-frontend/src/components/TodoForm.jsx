@@ -1,16 +1,27 @@
 import { useFormik } from 'formik';
 import { Button, DatePicker, Input } from "@nextui-org/react"
-import { getLocalTimeZone, today } from '@internationalized/date';
+import { getLocalTimeZone, today, parseDate } from '@internationalized/date';
+import { saveTodo } from '../service';
+import { useContext } from 'react';
+import { TodoContext } from '../context/TodoContext';
 
-export const TodoForm = () => {
+const defaultValues = {
+  id: Math.floor(Math.random() * (10000 - 1 + 1)) + 1,
+  desc: '',
+  date: today(getLocalTimeZone()).toString(),
+  done: false,
+}
+
+export const TodoForm = ({ initialValues = defaultValues }) => {
+
+  const { todos, setTodos } = useContext( TodoContext );
 
   const formik = useFormik({
-    initialValues: {
-      desc: 'xd',
-      date: today(getLocalTimeZone()),
-    },
+    initialValues: initialValues,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      saveTodo(values);
+      setTodos([...todos, values]);
+      formik.resetForm();
     },
   });
 
@@ -35,7 +46,7 @@ export const TodoForm = () => {
         name='date'
         onBlur={formik.handleBlur}
         onChange={(date) => formik.setFieldValue('date', date)}
-        value={formik.values.date}
+        value={ parseDate(formik.values.date) }
       />
       <div className="flex justify-end">
         <Button color="primary" type='submit'>
