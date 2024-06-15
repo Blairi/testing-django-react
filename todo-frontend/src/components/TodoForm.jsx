@@ -54,7 +54,7 @@ export const TodoForm = ({ initialValues = defaultValues, onSave = () => {} }) =
         label="Date" 
         name='date'
         onBlur={formik.handleBlur}
-        onChange={(date) => formik.setFieldValue('date', date)}
+        onChange={(date) => formik.setFieldValue('date', date.toString())}
         value={ parseDate(formik.values.date) }
       />
       <div className="flex justify-end">
