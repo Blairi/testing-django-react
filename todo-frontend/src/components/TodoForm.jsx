@@ -19,8 +19,16 @@ export const TodoForm = ({ initialValues = defaultValues, onSave = () => {} }) =
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit: (values) => {
+
+      // local storage
       saveTodo(values);
-      setTodos([...todos, values]);
+
+      // react state
+      setTodos([
+        ...todos.filter(todoItem => todoItem.id != values.id),
+        values
+      ]);
+
       formik.resetForm();
       onSave();
     },

@@ -9,6 +9,9 @@ export const saveTodo = ( todo ) => {
   }
 
   todoList = JSON.parse( todoList );
+
+  todoList = todoList.filter(todoItem => todoItem.id != todo.id)
+
   todoList.push(todo);
 
   localStorage.setItem("todos", JSON.stringify(todoList));
