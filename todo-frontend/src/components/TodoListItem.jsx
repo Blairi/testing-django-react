@@ -1,9 +1,28 @@
+import { useContext } from "react";
+import { TodoContext } from "../context/TodoContext";
 import { TodoForm } from "./TodoForm";
+import { saveTodo } from "../service";
 import { Button, Card, CardBody, CardFooter, CardHeader, Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/react"
 
 export const TodoListItem = ({ todo }) => {
 
+  const { todos, setTodos } = useContext( TodoContext );
+
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
+
+  const onToggleDone = () => {
+
+    todo.done = !todo.done;
+
+    // local storage
+    saveTodo(todo);
+
+    // react state
+    setTodos([
+      ...todos.filter(todoItem => todoItem.id != todo.id),
+      todo
+    ]);
+  }
 
   return (
     <>
@@ -36,14 +55,14 @@ export const TodoListItem = ({ todo }) => {
 
         <CardBody>
           <p>{ todo.date }</p>
-          <p>{todo.desc}</p>
+          <p className={`${todo.done ? "line-through" : ""}`}>{todo.desc}</p>
         </CardBody>
 
         <Divider />
 
         <CardFooter className="flex justify-end">
-          <Button color="success">
-            Done
+          <Button color={`${todo.done ? "default": "success"}`} onPress={onToggleDone}>
+            {`${todo.done ? "Undo": "Done"}`}
           </Button>
         </CardFooter>
       </Card>
