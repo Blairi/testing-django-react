@@ -12,9 +12,7 @@ export const TodoList = () => {
         todos.map((item, i) => (
           <TodoListItem 
             key={i}
-            date={item.date}
-            desc={item.desc}
-            done={item.done}
+            todo={ item }
           />
         ))
       }
