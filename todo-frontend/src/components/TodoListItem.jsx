@@ -1,7 +1,7 @@
 import { TodoForm } from "./TodoForm";
 import { Button, Card, CardBody, CardFooter, CardHeader, Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from "@nextui-org/react"
 
-export const TodoListItem = () => {
+export const TodoListItem = ({ todo }) => {
 
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
@@ -10,7 +10,7 @@ export const TodoListItem = () => {
       <Card>
         <CardHeader className="flex justify-between">
           <div className="flex flex-col">
-            <p className="text-md">NextUI</p>
+            <p className="text-md">{todo.id}</p>
           </div>
           <Dropdown className="dark text-foreground bg-background">
             <DropdownTrigger>
@@ -35,7 +35,8 @@ export const TodoListItem = () => {
         <Divider />
 
         <CardBody>
-          <p>Make beautiful websites regardless of your design experience.</p>
+          <p>{ todo.date }</p>
+          <p>{todo.desc}</p>
         </CardBody>
 
         <Divider />
@@ -57,7 +58,10 @@ export const TodoListItem = () => {
             <>
               <ModalHeader className="flex flex-col gap-1">Edit TODO</ModalHeader>
               <ModalBody>
-                <TodoForm onSave={onClose} />
+                <TodoForm 
+                  onSave={onClose} 
+                  initialValues={ todo }
+                />
               </ModalBody>
             </>
           )}
