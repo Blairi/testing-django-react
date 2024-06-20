@@ -56,13 +56,14 @@ export const TaskFormPage = () => {
   }, []);
   
   return (
-    <div>
+    <div className='max-w-xl mx-auto'>
       <form onSubmit={ onSubmit }>
 
         <input 
           type="text" 
           placeholder="Title"
           {...register("title", {required: true})}
+          className='bg-zinc-700 p-3 rounded-lg block w-full mb-3'
         />
 
         {errors.title && <span>this field is required</span>}
@@ -71,32 +72,38 @@ export const TaskFormPage = () => {
           placeholder="Description"
           rows="3"
           {...register("description", {required: true})}
+          className='bg-zinc-700 p-3 rounded-lg block w-full mb-3'
         ></textarea>
 
         {errors.title && <span>this field is required</span>}
 
-        <button>Save</button>
+        <button
+          className='bg-indigo-500 p-3 rounded-lg block w-full mt-3'
+        >Save</button>
 
       </form>
 
       {
         params.id && (
-          <button
-            onClick={async () => {
-              const accepted = window.confirm('are you sure?')
-              if(accepted) {
-                await deleteTask(params.id);
-                toast.success('Tarea eliminada', {
-                  position: "bottom-right",
-                  style: {
-                    background: "#101010",
-                    color: "#ffffff",
-                  }
-                });
-                navigate('/tasks/');
-              }
-            }}
-          >Delete</button>
+          <div className='flex justify-end'>
+            <button
+              className='bg-red-500 p-3 rounded-lg w-48 mt-3'
+              onClick={async () => {
+                const accepted = window.confirm('are you sure?')
+                if(accepted) {
+                  await deleteTask(params.id);
+                  toast.success('Tarea eliminada', {
+                    position: "bottom-right",
+                    style: {
+                      background: "#101010",
+                      color: "#ffffff",
+                    }
+                  });
+                  navigate('/tasks/');
+                }
+              }}
+            >Delete</button>
+          </div>
         )
       }
 
